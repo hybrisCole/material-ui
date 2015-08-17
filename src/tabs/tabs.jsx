@@ -15,7 +15,7 @@ let Tabs = React.createClass({
 
   propTypes: {
     contentContainerStyle: React.PropTypes.object,
-    initialSelectedIndex: React.PropTypes.number,
+    selectedIndex: React.PropTypes.number,
     inkBarStyle: React.PropTypes.object,
     tabItemContainerStyle: React.PropTypes.object,
   },
@@ -90,7 +90,7 @@ let Tabs = React.createClass({
 
     let width = 100 / this.getTabCount() +'%';
 
-    let left = 'calc(' + width + '*' + this.state.selectedIndex + ')';
+    let left = 'calc(' + width + '*' + this.props.selectedIndex + ')';
 
     let tabs = React.Children.map(children, (tab, index) => {
       if (tab.type.displayName === "Tab") {
@@ -121,7 +121,7 @@ let Tabs = React.createClass({
       }
     }, this);
 
-    let inkBar = this.state.selectedIndex !== -1 ? (
+    let inkBar = this.props.selectedIndex !== -1 ? (
       <InkBar
         left={left}
         width={width}
@@ -166,7 +166,7 @@ let Tabs = React.createClass({
     let tabIndex = tab.props.tabIndex;
 
     if ((valueLink.value && valueLink.value !== value) ||
-      this.state.selectedIndex !== tabIndex) {
+      this.props.selectedIndex !== tabIndex) {
       valueLink.requestChange(value, e, tab);
     }
 
@@ -177,7 +177,7 @@ let Tabs = React.createClass({
   _getSelected(tab, index) {
     let valueLink = this.getValueLink(this.props);
     return valueLink.value ? valueLink.value === tab.props.value :
-      this.state.selectedIndex === index;
+      this.props.selectedIndex === index;
   },
 
 });
